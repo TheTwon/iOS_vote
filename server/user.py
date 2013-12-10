@@ -1,10 +1,11 @@
 from db_user import DbUser
 import hashlib, uuid
 import os
+import random
 
 class User:
 	
-	
+
 	def __init__(self, login="", pwd=""):
 		self.login = login
 		self.pwd = pwd
@@ -31,16 +32,22 @@ class User:
 		if not self.userExists(login):
 			salt = self.generateSalt()
 			spwd = self.saltPwd(pwd, salt)
-			print(pwd)
-			print(spwd)
-			self.dbUser.insertUser(login, spwd, salt , self.generateToken())
+			token = self.generateToken()
+			self.dbUser.insertUser(login, spwd, salt , token)
+
+			self.login = login
+			self.pwd = spwd
+			self.salt = salt
 	
+
 	def generateSalt(self):
 		return str(uuid.uuid4().hex)
 		
+
 	def generateToken(self):
-		return 123 #TODO
+		return  uuid.uuid4().hex #TODO
 	
+
 	def saltPwd(self, pwd, salt):
 		spwd = pwd + salt
 		return hashlib.sha512(spwd).hexdigest()

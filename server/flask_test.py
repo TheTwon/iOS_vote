@@ -12,7 +12,6 @@ def hello():
 @app.route('/user_login', methods=['POST', 'GET'])
 def login():
 	
-	
 	login = request.args.get('login')
 	pwd = request.args.get("pwd")
 	
@@ -28,6 +27,8 @@ def login():
 		
 	#user is logged in at this point	
 	return "login succesfull"
+
+
 
 
 @app.route("/new_user")
@@ -50,7 +51,8 @@ def new_user():
 	return "user created"
 	
 	
-	
+
+#test routes to be deleted	
 	
 @app.route("/poll")
 def poll():
@@ -67,16 +69,6 @@ def show_post(post_id):
     # show the post with the given id, the id is an integer
     return 'Post %d' % post_id
     
-@app.route("/show_db")
-def show_db():
-	return get_DB()
-	
-@app.route("/js")
-def js():
-	return jsonify(result='OK', pipi=465)
-	#return "ma teub en chocolat"
-	
-
 
 
 
