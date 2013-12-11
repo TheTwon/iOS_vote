@@ -14,8 +14,12 @@ class DbUser:
 
 
 	def getUserInfo(self, login):
-		
-		self.cur.execute("SELECT * FROM user WHERE login = %s", (login))
+		print("getUserInfo-" + login + "-")
+		try:
+			self.cur.execute("SELECT * FROM user WHERE login = %s", (login))
+			return self.cur.fetchall()[0]
+		except:
+			self.db.rollback()
 		
 		
 	def userInDb(self, login):
@@ -33,12 +37,11 @@ class DbUser:
 
 		
 	def insertUser(self, login, pwd, salt, token):
+		token = 123
 		try:
 			self.cur.execute("""INSERT INTO user (login, salted_pwd, salt, token) VALUES (%s, %s, %s, %s) """, (login, pwd, salt, token))
 			self.db.commit()
 		except:
 			self.db.rollback()
-		
-
 
 

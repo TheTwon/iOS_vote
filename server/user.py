@@ -19,14 +19,17 @@ class User:
 				self.pwd = uInfo["salted_pwd"]#salty password
 				self.salt = uInfo["salt"]
 	
+
 	
 	def userExists(self, login):
 		return self.dbUser.userInDb(self.login)
 	
 	
+
 	def loginUser(self, givenPwd):
 		return self.saltPwd(givenPwd, self.salt) == self.pwd
 		
+
 	
 	def createUser(self, login, pwd):
 		if not self.userExists(login):
@@ -40,23 +43,22 @@ class User:
 			self.salt = salt
 	
 
+
 	def generateSalt(self):
 		return str(uuid.uuid4().hex)
 		
+
 
 	def generateToken(self):
 		return  uuid.uuid4().hex #TODO
 	
 
+
 	def saltPwd(self, pwd, salt):
 		spwd = pwd + salt
 		return hashlib.sha512(spwd).hexdigest()
 		
+
 	
 	def __str__(self):
 		return self.login + " - " + self.pwd + " - " + self.salt
-
-
-
-
-
