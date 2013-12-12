@@ -4,7 +4,9 @@ import os
 import random
 
 class User:
-	
+	"""
+	class defining a user
+	"""
 
 	def __init__(self, login="", pwd=""):
 		self.login = login
@@ -22,19 +24,28 @@ class User:
 
 	
 	def userExists(self, login):
+		"""
+		checks if a user exists (see also db_user.py)
+		"""
 		return self.dbUser.userInDb(self.login)
 	
 	
 
 	def loginUser(self, givenPwd):
-		return self.saltPwd(givenPwd, self.salt) == self.pwd
+		"""
+		login the user (checks credentials)
+		"""
+		return self.hashSaltPwd(givenPwd, self.salt) == self.pwd
 		
 
 	
 	def createUser(self, login, pwd):
+		"""
+		creates a non existing user
+		"""
 		if not self.userExists(login):
 			salt = self.generateSalt()
-			spwd = self.saltPwd(pwd, salt)
+			spwd = self.hashSaltPwd(pwd, salt)
 			token = self.generateToken()
 			self.dbUser.insertUser(login, spwd, salt , token)
 
@@ -45,16 +56,25 @@ class User:
 
 
 	def generateSalt(self):
+		"""
+		generates and returns a unique salt (different at each call)
+		"""
 		return str(uuid.uuid4().hex)
 		
 
 
 	def generateToken(self):
-		return  uuid.uuid4().hex #TODO
+		"""
+		generates and returns a unique token 
+		"""
+		return  uuid.uuid4().hex
 	
 
 
-	def saltPwd(self, pwd, salt):
+	def hashSaltPwd(self, pwd, salt):
+		"""
+		salts and hashes a password
+		"""
 		spwd = pwd + salt
 		return hashlib.sha512(spwd).hexdigest()
 		
@@ -62,3 +82,5 @@ class User:
 	
 	def __str__(self):
 		return self.login + " - " + self.pwd + " - " + self.salt
+		
+

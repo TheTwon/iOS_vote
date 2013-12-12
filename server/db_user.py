@@ -14,7 +14,6 @@ class DbUser:
 
 
 	def getUserInfo(self, login):
-		print("getUserInfo-" + login + "-")
 		try:
 			self.cur.execute("SELECT * FROM user WHERE login = %s", (login))
 			return self.cur.fetchall()[0]
@@ -33,11 +32,11 @@ class DbUser:
 		return self.cur.fetchall()[0]
 	
 	def updateToken(self, token, login):
-		self.cur.execute("UPDATE user SET token = %s WHERE login = %s;", (213, "dummy"))
+		self.cur.execute("UPDATE user SET token = %s WHERE login = %s;", (token, login))
 
 		
 	def insertUser(self, login, pwd, salt, token):
-		token = 123
+		#token = 123
 		try:
 			self.cur.execute("""INSERT INTO user (login, salted_pwd, salt, token) VALUES (%s, %s, %s, %s) """, (login, pwd, salt, token))
 			self.db.commit()
