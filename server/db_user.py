@@ -31,10 +31,25 @@ class DbUser:
 		self.cur.execute("SELECT token FROM user WHERE login = %s", (login))
 		return self.cur.fetchall()[0]
 	
-	def updateToken(self, token, login):
-		self.cur.execute("UPDATE user SET token = %s WHERE login = %s;", (token, login))
 
-		
+	def updateToken(self, token, login):
+		try:
+			self.cur.execute("""UPDATE user SET token = %s WHERE login = %s;""", (token, login))
+			self.db.commit()
+			print("shit went good")
+		except MySQLdb.Error:
+			print("error")
+
+	def updateFailedAttempts(self, nbAttempts, login):
+		self.cur.execute("UPDATE user SET attempts = %s WHERE login = %s;", (nbAttempts, login))
+		self.db.commit()
+
+
+
+	def getFailedAttemps(self, login):
+		self.cur.execute("SELECT attempts FROM user WHERE login = %s", (login))
+		return self.cur.fetchall()[0]
+
 	def insertUser(self, login, pwd, salt, token):
 		#token = 123
 		try:

@@ -13,13 +13,15 @@ class User:
 		self.pwd = pwd
 		self.salt = ""
 		self.dbUser = DbUser()
-		
+		self.fAttempts = 0
+
 		if(login != ""):
 			if(self.userExists(login)):
 				uInfo = self.dbUser.getUserInfo(login)
 				self.login = uInfo["login"]
 				self.pwd = uInfo["salted_pwd"]#salty password
 				self.salt = uInfo["salt"]
+				self.fAttempts = uInfo["attempts"]
 	
 
 	
@@ -67,7 +69,7 @@ class User:
 		"""
 		generates and returns a unique token 
 		"""
-		return  uuid.uuid4().hex
+		return uuid.uuid4().hex
 	
 
 
@@ -79,8 +81,19 @@ class User:
 		return hashlib.sha512(spwd).hexdigest()
 		
 
+	def addFailedAttempt(self, login):
+
+		self.dbUser.updateFailedAttempts(self.fAttempts + 1, login)
 	
+
+	def clearFailedAttempts(self, login):
+		self.dbUser.updateFailedAttempts(0, login)
+
+
 	def __str__(self):
 		return self.login + " - " + self.pwd + " - " + self.salt
 		
 
+
+u = User("dummy")
+u.clearFailedAttempts(u.login)
