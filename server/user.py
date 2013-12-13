@@ -2,6 +2,7 @@ from db_user import DbUser
 import hashlib, uuid
 import os
 import random
+import time
 
 class User:
 	"""
@@ -18,6 +19,7 @@ class User:
 		if(login != ""):
 			if(self.userExists(login)):
 				uInfo = self.dbUser.getUserInfo(login)
+				#retrieve non mutuable info
 				self.login = uInfo["login"]
 				self.pwd = uInfo["salted_pwd"]#salty password
 				self.salt = uInfo["salt"]
@@ -37,8 +39,11 @@ class User:
 		"""
 		login the user (checks credentials)
 		"""
-		return self.hashSaltPwd(givenPwd, self.salt) == self.pwd
+		if self.hashSaltPwd(givenPwd, self.salt) == self.pwd:
+			return True
 		
+		self.addFailedAttempt(self.login)
+		return False
 
 	
 	def createUser(self, login, pwd):
@@ -71,7 +76,20 @@ class User:
 		"""
 		return uuid.uuid4().hex
 	
-
+	
+	def updateToken(self):
+		"""
+		fully updates the users token
+		"""
+		if self.userExists(self.login):
+			#calls to db
+			self.dbUser.changeToken(self.generateToken(), self.login)
+			self.dbUser.updateTokenValidity(int(time.time()), self.login)
+			return self.dbUser.getToken(self.login)["token"]
+		
+		return False
+		
+		
 
 	def hashSaltPwd(self, pwd, salt):
 		"""
@@ -82,7 +100,6 @@ class User:
 		
 
 	def addFailedAttempt(self, login):
-
 		self.dbUser.updateFailedAttempts(self.fAttempts + 1, login)
 	
 
@@ -90,10 +107,10 @@ class User:
 		self.dbUser.updateFailedAttempts(0, login)
 
 
+
 	def __str__(self):
 		return self.login + " - " + self.pwd + " - " + self.salt
 		
 
-
 u = User("dummy")
-u.clearFailedAttempts(u.login)
+u.loginUser("wrongpwd")

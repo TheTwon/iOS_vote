@@ -29,14 +29,15 @@ class DbUser:
 
 	def getToken(self, login):
 		self.cur.execute("SELECT token FROM user WHERE login = %s", (login))
+		#print(self.cur.fetchall()[0])
 		return self.cur.fetchall()[0]
 	
 
-	def updateToken(self, token, login):
+	def changeToken(self, token, login):
 		try:
 			self.cur.execute("""UPDATE user SET token = %s WHERE login = %s;""", (token, login))
 			self.db.commit()
-			print("shit went good")
+			print("token changed")
 		except MySQLdb.Error:
 			print("error")
 
@@ -44,7 +45,11 @@ class DbUser:
 		self.cur.execute("UPDATE user SET attempts = %s WHERE login = %s;", (nbAttempts, login))
 		self.db.commit()
 
-
+	
+	def updateTokenValidity(self, validity, login):
+		self.cur.execute("UPDATE user SET token_validity = %s WHERE login = %s;", (validity, login))
+		self.db.commit()
+		
 
 	def getFailedAttemps(self, login):
 		self.cur.execute("SELECT attempts FROM user WHERE login = %s", (login))
@@ -57,5 +62,4 @@ class DbUser:
 			self.db.commit()
 		except:
 			self.db.rollback()
-
 
