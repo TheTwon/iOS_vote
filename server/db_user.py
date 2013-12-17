@@ -29,11 +29,15 @@ class DbUser:
 
 	def getToken(self, login):
 		self.cur.execute("SELECT token FROM user WHERE login = %s", (login))
-		#print(self.cur.fetchall()[0])
 		return self.cur.fetchall()[0]
 	
 
-	def changeToken(self, token, login):
+	def getAttempts(self, login):
+		self.cur.execute("SELECT attempts FROM user WHERE login = %s", (login))
+		return self.cur.fetchall()[0]
+
+
+	def changeToken(self, token, login, validity=0):
 		try:
 			self.cur.execute("""UPDATE user SET token = %s WHERE login = %s;""", (token, login))
 			self.db.commit()
