@@ -1,4 +1,5 @@
 from db_user import DbUser
+from poll import Poll
 import hashlib, uuid
 import os
 import random
@@ -122,10 +123,25 @@ class User:
 		self.dbUser.updateFailedAttempts(0, login)
 
 
+
 	def banned(self):
 		if self.userExists(self.login):
 			attemps = self.dbUser.getAttemps(self.login)["attempts"]
 			return attempts < User.AUTH_AT
+
+
+	def getUserId(self):
+		return self.dbUser.getId(self.login)["id"]
+
+
+
+	def getUserPolls(self):
+		return Poll.getPollList()
+
+
+
+	def getUnansweredUserPolls(self):
+		return Poll.getUnansweredPollList(self.getUserId())		
 
 	def __str__(self):
 		return self.login + " - " + self.pwd + " - " + self.salt

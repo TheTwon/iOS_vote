@@ -1,15 +1,11 @@
-import MySQLdb
-import MySQLdb.cursors
- 
+
+import db_tools
+
+
 class DbUser:
 	 
 	def __init__(self):
-		self.db = MySQLdb.connect(host="127.0.0.1", # your host, usually localhost
-					 user="root", # your username
-					 passwd="", # your password
-					 db="node_test_db",# name of the data base
-					 cursorclass=MySQLdb.cursors.DictCursor)# allows query results as dicts 
-
+		self.db = db_tools.getDB()
 		self.cur = self.db.cursor() 
 
 
@@ -22,7 +18,6 @@ class DbUser:
 		
 		
 	def userInDb(self, login):
-		
 		self.cur.execute("SELECT count(1) FROM user WHERE login = %s", (login))
 		return self.cur.fetchall()[0]["count(1)"] == 1
 
@@ -36,6 +31,10 @@ class DbUser:
 		self.cur.execute("SELECT attempts FROM user WHERE login = %s", (login))
 		return self.cur.fetchall()[0]
 
+
+	def getId(self, login):
+		self.cur.execute("SELECT id FROM user WHERE login = %s", (login))
+		return self.cur.fetchall()[0]
 
 	def changeToken(self, token, login, validity=0):
 		try:

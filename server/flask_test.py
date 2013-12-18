@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import MySQLdb
+import json
 from user import User
 from flask import render_template
 from flask.ext.mail import Mail
@@ -60,9 +61,9 @@ def new_user():
 	
 	
 
-#test routes to be deleted	
-@app.route("/poll", methods=['POST', 'GET'])
-def poll():
+
+@app.route("/polls", methods=['GET'])
+def polls():
 	
 	ulogin = request.args.get('login')
 	utoken = request.args.get("token")
@@ -75,11 +76,58 @@ def poll():
 		return jsonify(status="error", error_type="empty parameters")
 	
 	reqUser = User(ulogin)
+	if(not reqUser.userExists(login)):
+		return jsonify(status="error", error_type="no such user")
+
 	if(not reqUser.loginUser(token=utoken)):
 		return jsonify(status="error", error_type="bad token")
 
-	return jsonify(status="ok", info="todo")
-   
+	return json.dumps(reqUser.getUserPolls())
+
+
+@app.route("/unanswered_polls", methods=['GET'])
+def UaPolls():
+	
+	ulogin = request.args.get('login')
+	utoken = request.args.get("token")
+
+
+	if(ulogin is None) or (utoken is None):
+		return jsonify(status="error", error_type="bad parameter")
+	
+	if ulogin == "" or utoken == "":
+		return jsonify(status="error", error_type="empty parameters")
+	
+	reqUser = User(ulogin)
+	if(not reqUser.userExists(login)):
+		return jsonify(status="error", error_type="no such user")
+	
+	if(not reqUser.loginUser(token=utoken)):
+		return jsonify(status="error", error_type="bad token")
+
+	return json.dumps(reqUser.getUnansweredUserPolls())
+
+
+@app.route("/poll", methods=['GET'])
+def poll():
+
+	ulogin = request.args.get('login')
+	utoken = request.args.get("token")
+	pollId = request.args.get("poll_id")
+
+
+	if(ulogin is None) or (utoken is None) or (pollId is None):
+		return jsonify(status="error", error_type="bad parameter")
+	
+	if ulogin == "" or utoken == "" or pollId == "":
+		return jsonify(status="error", error_type="empty parameters")
+	
+	reqUser = User(ulogin)
+	if(not reqUser.loginUser(token=utoken)):
+		return jsonify(status="error", error_type="bad token")
+
+	return jsonify(status="ok", info="poll content comming soon")
+
 
 
 
@@ -123,7 +171,7 @@ def answserPoll():
 
 
     
-#error page
+#error handling
 @app.errorhandler(400)
 def page_not_found(e):
 	print(e)
@@ -135,10 +183,20 @@ def page_not_found(e):
 	print(e)
 	return jsonify(status="error", error_type="404"), 404
 
+
+@app.errorhandler(410)
+def internal_error(e):
+	print(e)
+	return jsonify(status="error", error_type="410"), 410
+
+
 @app.errorhandler(500)
 def internal_error(e):
 	print(e)
 	return jsonify(status="error", error_type="500"), 500
+
+
+
 	
 
 if __name__ == "__main__":
