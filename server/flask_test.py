@@ -1,10 +1,11 @@
 from flask import Flask, jsonify, request
 import MySQLdb
 import json
-from user import User
+from logic.user import User
 from flask import render_template
 from flask.ext.mail import Mail
 from flask.ext.mail import Message
+from flask import Response
 
 
 app = Flask(__name__)
@@ -13,11 +14,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return jsonify(status="ok", info="root page")
 
 
 
-@app.route('/login', methods=['POST', 'GET'])
+@app.route('/login', methods=['GET'])
 def login():
 	
 	login = request.args.get('login')
@@ -82,7 +83,9 @@ def polls():
 	if(not reqUser.loginUser(token=utoken)):
 		return jsonify(status="error", error_type="bad token")
 
-	return json.dumps(reqUser.getUserPolls())
+	return Response(json.dumps(reqUser.getUserPolls()), mimetype='application/json')
+
+
 
 
 @app.route("/unanswered_polls", methods=['GET'])
@@ -105,7 +108,32 @@ def UaPolls():
 	if(not reqUser.loginUser(token=utoken)):
 		return jsonify(status="error", error_type="bad token")
 
-	return json.dumps(reqUser.getUnansweredUserPolls())
+	return Response(json.dumps(reqUser.getUnansweredUserPolls()), mimetype='application/json')
+
+
+
+@app.route("/answered_polls", methods=['GET'])
+def APolls():
+	
+	ulogin = request.args.get('login')
+	utoken = request.args.get("token")
+
+
+	if(ulogin is None) or (utoken is None):
+		return jsonify(status="error", error_type="bad parameter")
+	
+	if ulogin == "" or utoken == "":
+		return jsonify(status="error", error_type="empty parameters")
+	
+	reqUser = User(ulogin)
+	if(not reqUser.userExists(login)):
+		return jsonify(status="error", error_type="no such user")
+	
+	if(not reqUser.loginUser(token=utoken)):
+		return jsonify(status="error", error_type="bad token")
+
+	return Response(json.dumps(reqUser.getAnsweredUserPolls()), mimetype='application/json')
+
 
 
 @app.route("/poll", methods=['GET'])
