@@ -1,5 +1,4 @@
 import MySQLdb
-import MySQLdb
 import MySQLdb.cursors
 
 

@@ -134,10 +134,25 @@ class User:
 		return self.dbUser.getId(self.login)["id"]
 
 
+	def getUserPoll(self, pollId, formated=True):
+		p = Poll(pollId)
+
+		if formated:
+			return p.formated()
+
+		return p
+
+
+	def hasAnsweredPoll(self, pollId):
+		p = Poll(pollId)
+
+		if p.pollExists(pollId):
+			return not p.hasUserAnswer(self.getUserId())
+
+		return False
 
 	def getUserPolls(self):
 		return Poll.getPollList()
-
 
 
 	def getUnansweredUserPolls(self):

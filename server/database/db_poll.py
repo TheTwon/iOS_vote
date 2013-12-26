@@ -41,7 +41,3 @@ class DbPoll:
 		self.cur.execute("""SELECT * FROM poll
 							WHERE id IN (SELECT fk_poll from response WHERE fk_user = %s);""", (uid))
 		return self.cur.fetchall()
-
-		
-
-

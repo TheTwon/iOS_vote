@@ -1,13 +1,12 @@
-
 import db_tools
-
+import MySQLdb
 
 class DbUser:
 	 
 	def __init__(self):
 		self.db = db_tools.getDB()
-		self.cur = self.db.cursor() 
-
+		self.cur = self.db.cursor()
+		self.polls = []
 
 	def getUserInfo(self, login):
 		try:
@@ -15,11 +14,14 @@ class DbUser:
 			return self.cur.fetchall()[0]
 		except:
 			self.db.rollback()
+			
 		
-		
+
+
 	def userInDb(self, login):
 		self.cur.execute("SELECT count(1) FROM user WHERE login = %s", (login))
 		return self.cur.fetchall()[0]["count(1)"] == 1
+
 
 
 	def getToken(self, login):
@@ -38,11 +40,10 @@ class DbUser:
 
 	def changeToken(self, token, login, validity=0):
 		try:
-			self.cur.execute("""UPDATE user SET token = %s WHERE login = %s;""", (token, login))
+			self.cur.execute('UPDATE user SET token = "%s", token_validity = %s WHERE login = "%s";', (token, validity ,login))
 			self.db.commit()
-			print("token changed")
 		except MySQLdb.Error:
-			print("error")
+			print("error changing token")
 
 	def updateFailedAttempts(self, nbAttempts, login):
 		self.cur.execute("UPDATE user SET attempts = %s WHERE login = %s;", (nbAttempts, login))
