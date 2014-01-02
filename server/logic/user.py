@@ -43,10 +43,11 @@ class User:
 		login the user (checks credentials)
 		TODO check if user exists
 		"""
+
 		if givenPwd != "":
 			if self.hashSaltPwd(givenPwd, self.salt) == self.pwd:
 				return True
-		
+			
 			self.addFailedAttempt(self.login)
 			return False
 
@@ -115,7 +116,7 @@ class User:
 
 	def addFailedAttempt(self, login):
 		self.dbUser.updateFailedAttempts(self.fAttempts + 1, login)
-		self.fAttempts = self.dbUser.get
+		self.fAttempts = self.dbUser.getFailedAttemps(login)
 
 
 
@@ -160,7 +161,11 @@ class User:
 
 
 	def getAnsweredUserPolls(self):
-		return Poll.getAnsweredPollList(self.getUserId())	
+		return Poll.getAnsweredPollList(self.getUserId())
+
+
+	def answerUserPoll(self, pollId):
+		pass
 
 	def __str__(self):
 		return self.login + " - " + self.pwd + " - " + self.salt

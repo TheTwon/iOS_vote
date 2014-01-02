@@ -60,6 +60,12 @@ class Poll:
 	def hasUserAnswer(self, userId):
 		return self.dbResponse.userResponseInDb(self.pid, userId)
 
+
+	def answer(self, userId):
+		pass
+
+
+
 	@classmethod
 	def getPollList(self):
 		tmpDbPoll = DbPoll()
