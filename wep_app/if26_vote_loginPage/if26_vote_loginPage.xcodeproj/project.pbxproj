@@ -29,6 +29,8 @@
 		6C90363318771A3400999F7B /* PollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C90363218771A3400999F7B /* PollViewController.m */; };
 		6C903636187722AE00999F7B /* Answer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C903635187722AE00999F7B /* Answer.m */; };
 		6C90363918772BB300999F7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C90363718772BB300999F7B /* Main.storyboard */; };
+		6C97429818785A5300637386 /* NewAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C97429718785A5300637386 /* NewAccountViewController.m */; };
+		6C97429C1878851500637386 /* PostPoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C97429B1878851500637386 /* PostPoll.m */; };
 		6CDEBD2D18756F9E005FA506 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CDEBD2C18756F9E005FA506 /* User.m */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +80,10 @@
 		6C903634187722AE00999F7B /* Answer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Answer.h; sourceTree = "<group>"; };
 		6C903635187722AE00999F7B /* Answer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Answer.m; sourceTree = "<group>"; };
 		6C90363818772BB300999F7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = if26_vote_loginPage/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6C97429618785A5300637386 /* NewAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAccountViewController.h; sourceTree = "<group>"; };
+		6C97429718785A5300637386 /* NewAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewAccountViewController.m; sourceTree = "<group>"; };
+		6C97429A1878851500637386 /* PostPoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostPoll.h; sourceTree = "<group>"; };
+		6C97429B1878851500637386 /* PostPoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostPoll.m; sourceTree = "<group>"; };
 		6CDEBD2B18756F9E005FA506 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		6CDEBD2C18756F9E005FA506 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +145,9 @@
 		55417F30186057F7000CBF09 /* if26_vote_loginPage */ = {
 			isa = PBXGroup;
 			children = (
+				6C97429A1878851500637386 /* PostPoll.h */,
+				6C97429B1878851500637386 /* PostPoll.m */,
+				6C97429918785A5F00637386 /* new Account */,
 				6C90363718772BB300999F7B /* Main.storyboard */,
 				6C903634187722AE00999F7B /* Answer.h */,
 				6C903635187722AE00999F7B /* Answer.m */,
@@ -219,6 +228,15 @@
 				654D84B41863279B00350663 /* MesVotesViewController.m */,
 			);
 			name = "Mes Votes";
+			sourceTree = "<group>";
+		};
+		6C97429918785A5F00637386 /* new Account */ = {
+			isa = PBXGroup;
+			children = (
+				6C97429618785A5300637386 /* NewAccountViewController.h */,
+				6C97429718785A5300637386 /* NewAccountViewController.m */,
+			);
+			name = "new Account";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,6 +348,8 @@
 				6C53D818187605F7002873A5 /* RestClient.m in Sources */,
 				6C90363318771A3400999F7B /* PollViewController.m in Sources */,
 				6C903636187722AE00999F7B /* Answer.m in Sources */,
+				6C97429818785A5300637386 /* NewAccountViewController.m in Sources */,
+				6C97429C1878851500637386 /* PostPoll.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

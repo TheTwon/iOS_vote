@@ -38,12 +38,16 @@ def login():
 	#user is logged in at this point	
 	return jsonify(status="ok", info="user logged in", token = reqUser.updateToken())
 
+@app.route("/post_test", methods=['POST'])
+def post_test():
+	print(request.json)
+	return jsonify(request.json)
 
 
 
-@app.route("/new_user", methods=['POST', 'GET'])
+@app.route("/new_user", methods=['POST'])
 def new_user():
-		
+	"""	
 	login = request.args.get('login')
 	pwd = request.args.get("pwd")
 	
@@ -60,7 +64,32 @@ def new_user():
 	print("adding user")
 	reqUser.createUser(login, pwd)
 	return jsonify(status="ok", info="user created")
+	"""
+
+	content = request.json
+	params = ["login", "pwd"]
+	missing = []
+	for p in params:
+		if p not in content:
+			missing.append(p)
 	
+	if len(missing) != 0:
+		return jsonify(status="error", error_type="bad parameter", missing=missing)
+
+
+	#user credentials check
+	ulogin = content["login"]
+	upwd = content["pwd"]
+
+	reqUser = User(ulogin)
+	if(reqUser.userExists(ulogin)):
+		return jsonify(status="error", error_type="user exists")
+	
+	print("adding user")
+	reqUser.createUser(ulogin, upwd)
+	return jsonify(status="ok", info="user created")
+
+
 	
 
 
@@ -218,7 +247,7 @@ def changePwd():
 @app.route("/answer_poll", methods=['POST'])
 def answserPoll():
 	content = request.json
-
+	print(content)
 	params = ["login", "token", "poll_id", "answer_id"]
 	missing = []
 	for p in params:
@@ -256,7 +285,9 @@ def answserPoll():
 	if not p.validAnswer(answerId):
 		return jsonify(status="error", error_type="invalid answer ID")
 
-	return jsonify(status="ok", info="coming soon...")
+	reqUser.answerUserPoll(upollId, answerId)
+	return jsonify(status="ok", info="answered poll")
+	#return jsonify(content)
 
 
 

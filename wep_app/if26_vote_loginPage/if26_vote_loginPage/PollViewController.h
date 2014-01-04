@@ -15,5 +15,9 @@
 }
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnDone;
 @property (weak, nonatomic) Vote *v;
+@property (weak, nonatomic) IBOutlet UILabel *lblPollTitle;
+@property (weak, nonatomic) IBOutlet UILabel *lblPollDesc;
+
+- (IBAction)btnPressed:(id)sender;
 
 @end

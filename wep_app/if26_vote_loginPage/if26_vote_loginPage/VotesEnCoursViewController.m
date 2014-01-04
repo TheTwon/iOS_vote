@@ -231,6 +231,10 @@
 	[challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
 }
 
-
+//reload the data every time screen is shown
+- (void) viewWillAppear:(BOOL)animated{
+	User *suser = [User userSingleton];
+	[self httpGetOngoingVotes:suser.login withToken:suser.token];
+}
 
 @end

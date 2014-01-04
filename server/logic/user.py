@@ -152,6 +152,7 @@ class User:
 
 		return False
 
+
 	def getUserPolls(self):
 		return Poll.getPollList()
 
@@ -164,8 +165,10 @@ class User:
 		return list(Poll.getAnsweredPollList(self.getUserId()))
 
 
-	def answerUserPoll(self, pollId):
-		pass
+	def answerUserPoll(self, pollId, answerId):
+		p = Poll(pollId)
+		if p.pollExists(pollId):
+			p.answer(self.getUserId(), answerId)
 
 	def __str__(self):
 		return self.login + " - " + self.pwd + " - " + self.salt

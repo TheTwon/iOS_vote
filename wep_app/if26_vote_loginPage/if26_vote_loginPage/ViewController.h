@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtPassword;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnLogin;
+@property (weak, nonatomic) IBOutlet UIButton *btnNewAccount;
 
 - (IBAction)submitButton:(id)sender;
 - (IBAction)backgroundClick:(id)sender;

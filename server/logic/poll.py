@@ -61,8 +61,11 @@ class Poll:
 		return self.dbResponse.userResponseInDb(self.pid, userId)
 
 
-	def answer(self, userId):
-		pass
+	def answer(self, userId, answerId):
+		if not self.hasUserAnswer(userId):
+			if self.validAnswer(answerId):
+				print("answering poll...")
+				self.dbResponse.putResponse(self.pid, userId, answerId)
 
 
 

@@ -9,6 +9,7 @@
 #import "PollViewController.h"
 #import "User.h"
 #import "Answer.h"
+#import "PostPoll.h"
 
 @interface PollViewController ()
 
@@ -17,7 +18,10 @@
 @implementation PollViewController
 {
 	NSArray *answers;
+	NSMutableArray *superAnswers;
+	NSArray *awesomeAnswers;
 	UIPickerView *myPickerView;
+	NSNumber *selectedRow;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -32,18 +36,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 140, 320, 150)];
+	User *suser = [User userSingleton];
+	NSString *sid = [_v.pollId stringValue];
+	[self httpGetVote:suser.login withToken:suser.token withPollId:sid];
+	// Do any additional setup after loading the view.
+}
+
+
+-(void) addChoicePicker
+{
+	myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 145, 320, 150)];
 	myPickerView.delegate = self;
 	myPickerView.showsSelectionIndicator = YES;
 	[self.view addSubview:myPickerView];
 	
-	//NSLog(@"--- %d", _v.pollId);
-	NSString *sid = [_v.pollId stringValue];
-
-	User *suser = [User userSingleton];
-	[self httpGetVote:suser.login withToken:suser.token withPollId:sid];
-	// Do any additional setup after loading the view.
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -53,12 +61,13 @@
 
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component {
-    // Handle the selection
+
+	selectedRow = [NSNumber numberWithInt:row];
 }
 
 // tell the picker how many rows are available for a given component
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    NSUInteger numRows = [answers count] - 1;
+    NSUInteger numRows = [answers count];
 	
     return numRows;
 }
@@ -73,12 +82,12 @@
     NSString *title;
 	if (![answers count])
 		{
-			NSLog(@"EMPTY:: %@", answers);
 			title = [@"" stringByAppendingFormat:@"%d",row];
 		}
 	else {
-			NSLog(@"FULL:: %@", answers);
-			title = answers[row];
+			//NSLog(@"FULL:: %@", answers);
+			Answer *a = [answers objectAtIndex:row];
+			title = a.description;
 	}
     
 	
@@ -132,6 +141,8 @@
 }
 
 
+
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
 	// The request is complete and data has been received
 	// You can parse the stuff in your instance variable now
@@ -142,35 +153,33 @@
 	
 	NSArray *ans = [respDict objectForKey:@"answers"];
 
-	
+	awesomeAnswers = ans;
 	NSString *status = [respDict objectForKey:@"status"];
+	NSString *title = [respDict objectForKey:@"title"];
+	NSString *desc = [respDict objectForKey:@"description"];
+	
+	_lblPollDesc.text = desc;
+	_lblPollTitle.text = title;
 	
 	NSMutableArray *tmpAnswers = [NSMutableArray arrayWithCapacity:20];
 	
+	superAnswers = [NSMutableArray arrayWithCapacity:ans.count];
 	for (NSDictionary *ia in ans){
 		
 		Answer *a = [[Answer alloc] init];
-		a.answerId = [ia objectForKey:@"id"];
+		NSNumber *tmpaId = [ia objectForKey:@"id"];
+		a.answerId = tmpaId;
 		a.description = [ia objectForKey:@"description"];
 		a.pollId = _v.pollId;
 		
 		[tmpAnswers addObject:a];
-		
+		[superAnswers addObject:a];
 	}
 	
-	answers = tmpAnswers;
 	
-	NSLog(@"answers: %@", ans);
-	NSLog(@"status: %@", status);
+	answers =  [tmpAnswers copy];
 
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"dbg"
-													message:@"tfygvhbjn"
-												   delegate:nil
-										  cancelButtonTitle:@"OK"
-										  otherButtonTitles:nil];
-	[alert show];
-	//[self.tableView reloadData];
-	[myPickerView reloadAllComponents];
+	[self addChoicePicker];
 	
 }
 
@@ -201,4 +210,29 @@
 
 
 
+- (IBAction)btnPressed:(id)sender {
+	
+	/*
+	PostPoll *pollPoster = [PostPoll alloc];
+	NSString *pid =  [_v.pollId stringValue];
+	Answer *a = [answers objectAtIndex:(int)selectedRow];
+	NSNumber *dbgNum = a.answerId;
+	NSString *aid = [a.answerId stringValue];
+	
+	User *suser = [User userSingleton];
+	//[pollPoster httpPostVote:suser.login withToken:suser.token withPollId:pid withAnswerId:aid];
+	 */
+	if(selectedRow == NULL)
+		{
+			selectedRow = [[NSNumber alloc] initWithInt:0];
+		}
+	Answer *a = [superAnswers objectAtIndex:selectedRow.intValue];
+	
+	
+	PostPoll *pollPoster = [PostPoll alloc];
+	User *suser = [User userSingleton];
+	NSString *pid =  [_v.pollId stringValue];
+	[pollPoster setCallingController:self];
+	[pollPoster httpPostVote:suser.login withToken:suser.token withPollId:pid withAnswerId:a.answerId.stringValue];
+}
 @end

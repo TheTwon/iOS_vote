@@ -27,6 +27,7 @@
     [super viewDidLoad];
 	 self.navigationController.navigationBarHidden = YES;
 	_txtPassword.secureTextEntry = YES;
+	[[self navigationController] setNavigationBarHidden:NO animated:YES];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -51,7 +52,10 @@
 	
 }
 
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	[[self navigationController] setNavigationBarHidden:YES animated:YES];
+}
 
 - (IBAction)submitButton:(id)sender {
 	
