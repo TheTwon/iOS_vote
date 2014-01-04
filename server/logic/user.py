@@ -157,11 +157,11 @@ class User:
 
 
 	def getUnansweredUserPolls(self):
-		return Poll.getUnansweredPollList(self.getUserId())		
+		return list(Poll.getUnansweredPollList(self.getUserId()))
 
 
 	def getAnsweredUserPolls(self):
-		return Poll.getAnsweredPollList(self.getUserId())
+		return list(Poll.getAnsweredPollList(self.getUserId()))
 
 
 	def answerUserPoll(self, pollId):

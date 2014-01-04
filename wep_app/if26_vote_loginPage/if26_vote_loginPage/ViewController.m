@@ -18,6 +18,9 @@
 
 
 @implementation ViewController
+{
+	NSString *tmpLogin;
+}
 
 - (void)viewDidLoad
 {
@@ -36,85 +39,24 @@
 
 - (void) httpLogin: (NSString *) userLogin withPassword: (NSString *) userPwd;
 {
+	tmpLogin = userLogin;
 	
-	
-	NSString *strUri = [NSString stringWithFormat:@"http://127.0.0.1:8000/login?login=%@&pwd=%@",userLogin, userPwd];
+	NSString *strUri = [NSString stringWithFormat:@"https://127.0.0.1:8000/login?login=%@&pwd=%@",userLogin, userPwd];
 	
 
-	//define URI
-
-	//networking code
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:strUri]
-														   cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-													   timeoutInterval:10];
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:strUri]];
 	
-	[request setHTTPMethod: @"GET"];
+	// Create url connection and fire request
+	NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 	
-    NSError *requestError;
-	NSURLResponse *urlResponse = nil;
-	//[request canAuthenticateAgainstProtectionSpace:YES];
-	
-	
-	NSData *response1 = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&requestError];
-	
-	//retrieve data
-	NSString *strData = [[NSString alloc]initWithData:response1 encoding:NSUTF8StringEncoding];
-
-	NSError *e = nil;
-	NSDictionary *myDict = [NSJSONSerialization JSONObjectWithData:response1 options:kNilOptions error:&requestError];
-	
-	
-	NSLog(@"%@", myDict);
-	NSLog(@"%@", [myDict objectForKey:@"status"]);
-	
-	
-	//NSDictionary *myDict = [NSJSONSerialization JSONObjectWithData:_responseData];
-	 
-	//check auth
-	if([[myDict objectForKey:@"status"]isEqualToString:@"ok"])
-	{
-		NSLog(@"user logged");
-		User *suser = [User userSingleton];
-		suser.login = userLogin;
-		suser.token = [myDict objectForKey:@"token"];
-		suser.logged = [NSNumber numberWithBool:YES];
-		NSLog(@"%@ %@ %@", suser.login, suser.token, suser.logged);
-	
-	[self performSegueWithIdentifier:@"loginsegue" sender:self];
-	//MainViewController *main = [[MainViewController alloc] initWithNibName:nil bundle:nil];
-	//	[self presentViewController:main animated:YES completion:NULL];
-	}
-	else
-	{
-		NSLog(@"failed auth");
-		NSString *msg = @"wrong login/password combination";
-	 
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"failed login"
-												  message:msg
-												  delegate:nil
-											      cancelButtonTitle:@"OK"
-												  otherButtonTitles:nil];
-	 [alert show];
-	}
-	 
 }
+
+
 
 - (IBAction)submitButton:(id)sender {
 	
 	[self httpLogin:_txtUsername.text withPassword:_txtPassword.text];
 
-	//------------
-	
-	/*NSString *msg =[NSString stringWithFormat:@" login: %@ pwd: %@", _txtUsername.text, @"superPWD"];
-	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"test"
-											  message:msg
-											  delegate:nil
-										      cancelButtonTitle:@"OK"
-										      otherButtonTitles:nil];
-	[alert show];
-	//[alert release];*/
-    
 }
 
 - (IBAction)backgroundClick:(id)sender {
@@ -122,7 +64,84 @@
     [_txtPassword resignFirstResponder];
 }
 
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+	// A response has been received, this is where we initialize the instance var you created
+	// so that we can append data to it in the didReceiveData method
+	// Furthermore, this method is called each time there is a redirect so reinitializing it
+	// also serves to clear it
+	_responseData = [[NSMutableData alloc] init];
+}
 
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+	// Append the new data to the instance variable you declared
+	[_responseData appendData:data];
+}
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+				  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
+	// Return nil to indicate not necessary to store a cached response for this connection
+	return nil;
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+	// The request is complete and data has been received
+	// You can parse the stuff in your instance variable now
+	
+	NSError *e;
+	NSDictionary *respDict = [NSJSONSerialization JSONObjectWithData:_responseData options:kNilOptions error:&e];
+	
+	if([[respDict objectForKey:@"status"]isEqualToString:@"ok"])
+		{
+		NSLog(@"user logged");
+		User *suser = [User userSingleton];
+		suser.login = tmpLogin;
+		suser.token = [respDict objectForKey:@"token"];
+		suser.logged = [NSNumber numberWithBool:YES];
+		NSLog(@"%@ %@ %@", suser.login, suser.token, suser.logged);
+		
+		[self performSegueWithIdentifier:@"loginsegue" sender:self];
+		//MainViewController *main = [[MainViewController alloc] initWithNibName:nil bundle:nil];
+		//	[self presentViewController:main animated:YES completion:NULL];
+		}
+	else
+		{
+		NSLog(@"failed auth");
+		NSString *msg = @"wrong login/password combination";
+		
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"failed login"
+														message:msg
+													   delegate:nil
+											  cancelButtonTitle:@"OK"
+											  otherButtonTitles:nil];
+		[alert show];
+		}
+	
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+	NSLog(@"an error has occured");
+	NSString *msg = @"an error has occured, check access to internet";
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"networking error"
+													message:msg
+												   delegate:nil
+										  cancelButtonTitle:@"OK"
+										  otherButtonTitles:nil];
+	[alert show];
+}
+
+
+//Ignore bad certificates, only for DEV
+- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
+	return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+
+	[challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+	
+	[challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
 
 
 @end

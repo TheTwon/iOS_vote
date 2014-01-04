@@ -8,6 +8,8 @@
 
 #import "VotesEnCoursViewController.h"
 #import "Vote.h"
+#import "User.h"
+#import "PollViewController.h"
 
 @interface VotesEnCoursViewController ()
 
@@ -19,23 +21,9 @@
 
 - (void)loadInitialData {
 	
-	//call HTTP here
-    NSMutableArray *tmpvotes = [NSMutableArray arrayWithCapacity:20];
-	Vote *vote = [[Vote alloc] init];
-	vote.nom = @"Présidence BDE";
-    vote.description = @"Votez pour le nouveau président";
-    vote.candidat1 = 52;
-    vote.candidat2 = 23;
-    [tmpvotes addObject:vote];
-    
-    vote = [[Vote alloc] init];
-    vote.nom = @"Couleur officiel UTT";
-    vote.description = @"Votez pour la couleur de l'UTT";
-    vote.candidat1 = 31;
-    vote.candidat2 = 43;
-    [tmpvotes addObject:vote];
+	User *suser = [User userSingleton];
 	
-	self.votes = tmpvotes;
+	[self httpGetOngoingVotes:suser.login withToken:suser.token];
 	
 }
 
@@ -94,6 +82,15 @@
     return cell;
 }
 
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"pollSegue"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        PollViewController *destViewController = segue.destinationViewController;
+        destViewController.v = [votes objectAtIndex:indexPath.row];
+    }
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -145,36 +142,95 @@
 
  */
 
-#pragma mark NSURLConnection Delegate Methods
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    // A response has been received, this is where we initialize the instance var you created
-    // so that we can append data to it in the didReceiveData method
-    // Furthermore, this method is called each time there is a redirect so reinitializing it
-    // also serves to clear it
+	// A response has been received, this is where we initialize the instance var you created
+	// so that we can append data to it in the didReceiveData method
+	// Furthermore, this method is called each time there is a redirect so reinitializing it
+	// also serves to clear it
 	_responseData = [[NSMutableData alloc] init];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    // Append the new data to the instance variable you declared
-    [_responseData appendData:data];
+	// Append the new data to the instance variable you declared
+	[_responseData appendData:data];
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection
-                  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
-    // Return nil to indicate not necessary to store a cached response for this connection
-    return nil;
+				  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
+	// Return nil to indicate not necessary to store a cached response for this connection
+	return nil;
 }
 
+
+- (void) httpGetOngoingVotes: (NSString *) userLogin withToken: (NSString *) userToken;
+{
+	
+	NSString *strUri = [NSString stringWithFormat:@"https://127.0.0.1:8000/unanswered_polls?login=%@&token=%@",userLogin, userToken];
+	
+	
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:strUri]];
+	
+	// Create url connection and fire request
+	NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+	
+}
+
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    // The request is complete and data has been received
-    // You can parse the stuff in your instance variable now
-    
+	// The request is complete and data has been received
+	// You can parse the stuff in your instance variable now
+	
+	NSError *e;
+	NSDictionary *respDict = [NSJSONSerialization JSONObjectWithData:_responseData options:kNilOptions error:&e];
+	
+	NSArray *userVotes = [respDict objectForKey:@"votes"];
+	
+	NSString *status = [respDict objectForKey:@"status"];
+	
+	NSMutableArray *tmpvotes = [NSMutableArray arrayWithCapacity:20];
+	for (NSDictionary *ia in userVotes){
+		
+		Vote *vote = [[Vote alloc] init];
+		vote.nom = [ia objectForKey:@"title"];
+		vote.description = [ia objectForKey:@"description"];
+		vote.candidat1 = -1;
+		vote.candidat2 = -1;
+		vote.pollId = [ia objectForKey:@"id"];
+		[tmpvotes addObject:vote];
+		
+	}
+	self.votes = tmpvotes;
+	[self.tableView reloadData];
+
+	
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    // The request has failed for some reason!
-    // Check the error var
+	NSLog(@"an error has occured");
+	NSString *msg = @"an error has occured, check access to internet";
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"networking error"
+													message:msg
+												   delegate:nil
+										  cancelButtonTitle:@"OK"
+										  otherButtonTitles:nil];
+	[alert show];
 }
+
+
+//Ignore bad certificates, only for DEV
+- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
+	return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+	
+	[challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+	
+	[challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
+
+
 
 @end

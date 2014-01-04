@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MesVotesViewController : UITableViewController
+@interface MesVotesViewController : UITableViewController <NSURLConnectionDelegate>
+{
+    NSMutableData *_responseData;
+}
 
 @property (nonatomic, strong) NSMutableArray *votes;
 

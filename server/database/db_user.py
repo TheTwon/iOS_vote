@@ -40,7 +40,7 @@ class DbUser:
 
 	def changeToken(self, token, login, validity=0):
 		try:
-			self.cur.execute('UPDATE user SET token = "%s", token_validity = %s WHERE login = "%s";', (token, validity ,login))
+			self.cur.execute('UPDATE user SET token = %s, token_validity = %s WHERE login = %s;', (token, validity ,login))
 			self.db.commit()
 		except MySQLdb.Error:
 			print("error changing token")

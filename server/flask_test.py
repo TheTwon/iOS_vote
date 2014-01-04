@@ -109,7 +109,10 @@ def UaPolls():
 	if(not reqUser.loginUser(token=utoken)):
 		return jsonify(status="error", error_type="bad token")
 
-	return Response(json.dumps(reqUser.getUnansweredUserPolls()), mimetype='application/json')
+	l = reqUser.getUnansweredUserPolls()
+	d = {"status": "ok"}
+	d["votes"] = l
+	return Response(json.dumps(d), mimetype='application/json')
 
 
 
@@ -132,8 +135,11 @@ def APolls():
 	
 	if(not reqUser.loginUser(token=utoken)):
 		return jsonify(status="error", error_type="bad token")
-
-	return Response(json.dumps(reqUser.getAnsweredUserPolls()), mimetype='application/json')
+	
+	l = reqUser.getAnsweredUserPolls()
+	d = {"status": "ok"}
+	d["votes"] = l
+	return Response(json.dumps(d), mimetype='application/json')
 
 
 
@@ -182,7 +188,9 @@ def pollFromId(poll_id, login, methods=['GET']):
 	if(not reqUser.loginUser(token=utoken)):
 		return jsonify(status="error", error_type="bad token")
 
-	return jsonify(status="ok", info="poll content comming soon")
+	p = reqUser.getUserPoll(poll_id)
+
+	return jsonify(p)
 
 
 

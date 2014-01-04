@@ -14,6 +14,7 @@
 @property (nonatomic, copy) NSString *description;
 @property (nonatomic, assign) int candidat1;
 @property (nonatomic, assign) int candidat2;
+@property (nonatomic, assign) NSNumber *pollId;
 
 
 @end

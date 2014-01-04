@@ -7,6 +7,7 @@
 //
 
 #import "ReglagesViewController.h"
+#import "User.h"
 
 @interface ReglagesViewController ()
 

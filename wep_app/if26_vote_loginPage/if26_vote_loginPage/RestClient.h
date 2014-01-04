@@ -14,13 +14,8 @@
     void (^onReceiveDataCb)(id);
 }
 
-@property NSString *root;
-@property NSString *protocol;
-@property NSString *version;
-@property NSString *handle;
-@property NSString *key;
 
-@property NSInteger tries;
+
 
 - (NSString*)buildUrl: (NSString*)object args:(NSString*)args;
 - (id)get:(NSString*)object args:(NSDictionary*)args;

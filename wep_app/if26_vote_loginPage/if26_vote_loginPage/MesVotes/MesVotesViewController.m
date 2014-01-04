@@ -8,6 +8,7 @@
 
 #import "MesVotesViewController.h"
 #import "Vote.h"
+#import "User.h"
 
 @interface MesVotesViewController ()
 
@@ -19,22 +20,10 @@
 
 - (void)loadInitialData {
 	
-	NSMutableArray *tmpvotes = [NSMutableArray arrayWithCapacity:20];
-	Vote *vote = [[Vote alloc] init];
-	vote.nom = @"raoul or rodrigue";
-    vote.description = @"choose the best latino out there";
-    vote.candidat1 = 52;
-    vote.candidat2 = 23;
-    [tmpvotes addObject:vote];
-    
-    vote = [[Vote alloc] init];
-    vote.nom = @"you think you can beat the system??";
-    vote.description = @"this is the system beating you up";
-    vote.candidat1 = 31;
-    vote.candidat2 = 43;
-    [tmpvotes addObject:vote];
+	User *suser = [User userSingleton];
 	
-	self.votes = tmpvotes;
+	[self httpGetAnsweredVotes:suser.login withToken:suser.token];
+	
 
 	
 }
@@ -145,5 +134,96 @@
 }
 
  */
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+	// A response has been received, this is where we initialize the instance var you created
+	// so that we can append data to it in the didReceiveData method
+	// Furthermore, this method is called each time there is a redirect so reinitializing it
+	// also serves to clear it
+	_responseData = [[NSMutableData alloc] init];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+	// Append the new data to the instance variable you declared
+	[_responseData appendData:data];
+}
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+				  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
+	// Return nil to indicate not necessary to store a cached response for this connection
+	return nil;
+}
+
+
+- (void) httpGetAnsweredVotes: (NSString *) userLogin withToken: (NSString *) userToken;
+{
+	
+	NSString *strUri = [NSString stringWithFormat:@"https://127.0.0.1:8000/answered_polls?login=%@&token=%@",userLogin, userToken];
+	
+	
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:strUri]];
+	
+	// Create url connection and fire request
+	NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+	
+}
+
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+	// The request is complete and data has been received
+	// You can parse the stuff in your instance variable now
+	
+	NSError *e;
+	NSDictionary *respDict = [NSJSONSerialization JSONObjectWithData:_responseData options:kNilOptions error:&e];
+	
+	NSArray *userVotes = [respDict objectForKey:@"votes"];
+	
+	NSString *status = [respDict objectForKey:@"status"];
+	
+	NSMutableArray *tmpvotes = [NSMutableArray arrayWithCapacity:20];
+	for (NSDictionary *ia in userVotes){// do stuff
+		
+		Vote *vote = [[Vote alloc] init];
+		vote.nom = [ia objectForKey:@"title"];
+		vote.description = [ia objectForKey:@"description"];
+		vote.candidat1 = -1;
+		vote.candidat2 = -1;
+		//vote.pollId = [ia objectForKey:@"id"];
+		[tmpvotes addObject:vote];
+		
+	}
+	//NSLog(@"-- %@", tmpvotes);
+	self.votes = tmpvotes;
+	[self.tableView reloadData];
+
+	
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+	NSLog(@"an error has occured");
+	NSString *msg = @"an error has occured, check access to internet";
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"networking error"
+													message:msg
+												   delegate:nil
+										  cancelButtonTitle:@"OK"
+										  otherButtonTitles:nil];
+	[alert show];
+}
+
+
+//Ignore bad certificates, only for DEV
+- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
+	return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+	
+	[challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+	
+	[challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
+
+
 
 @end

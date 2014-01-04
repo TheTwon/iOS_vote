@@ -24,7 +24,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z1f-D7-HGS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1123" y="144"/>
+            <point key="canvasLocation" x="1091" y="144"/>
         </scene>
         <!--Mes Votes View Controller - Mes votes-->
         <scene sceneID="fNp-Lj-jxB">
@@ -35,11 +35,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VoteCell" textLabel="0Ap-z9-0SJ" detailTextLabel="JZC-dw-W7e" style="IBUITableViewCellStyleSubtitle" id="d28-pn-NYI">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VoteCell" textLabel="0Ap-z9-0SJ" detailTextLabel="JZC-dw-W7e" style="IBUITableViewCellStyleSubtitle" id="d28-pn-NYI">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0Ap-z9-0SJ">
@@ -70,7 +70,30 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rIP-9l-7ur" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2197" y="-211"/>
+            <point key="canvasLocation" x="1985" y="-207"/>
+        </scene>
+        <!--Poll View Controller-->
+        <scene sceneID="6h5-pa-59z">
+            <objects>
+                <viewController id="yd0-aA-bhP" customClass="PollViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1zP-a2-N1X">
+                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Rpn-dn-180">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="AUY-Rc-KUc"/>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="btnDone" destination="AUY-Rc-KUc" id="hYM-YJ-zq6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pSP-XV-xzi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2407" y="513"/>
         </scene>
         <!--Votes En Cours View Controller - Votes en cours-->
         <scene sceneID="pka-gP-bUE">
@@ -81,11 +104,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VoteCell" textLabel="PqL-J7-rE9" detailTextLabel="Jde-gf-QVP" style="IBUITableViewCellStyleSubtitle" id="rcM-LN-1WS">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VoteCell" textLabel="PqL-J7-rE9" detailTextLabel="Jde-gf-QVP" style="IBUITableViewCellStyleSubtitle" id="rcM-LN-1WS">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PqL-J7-rE9">
@@ -105,6 +128,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <segue destination="yd0-aA-bhP" kind="custom" identifier="pollSegue" id="FkB-hK-jvL"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -116,7 +142,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ft0-jl-MIa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2197" y="529"/>
+            <point key="canvasLocation" x="1985" y="513"/>
         </scene>
         <!--Table View Controller - Reglages-->
         <scene sceneID="MqD-Uf-ox7">
@@ -146,7 +172,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h7q-9a-wre" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1671" y="1246"/>
+            <point key="canvasLocation" x="1985" y="1202"/>
         </scene>
         <!--Navigation Controller - Mes Votes-->
         <scene sceneID="O9h-xg-SHH">
@@ -165,7 +191,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zxz-eb-wad" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1671" y="-211"/>
+            <point key="canvasLocation" x="1557" y="-207"/>
         </scene>
         <!--Navigation Controller - Votes en cours-->
         <scene sceneID="VYd-ms-5QA">
@@ -184,7 +210,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YPp-Un-EWz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1671" y="529"/>
+            <point key="canvasLocation" x="1557" y="513"/>
         </scene>
         <!--Navigation Controller - Reglages-->
         <scene sceneID="05c-ti-RkP">
@@ -203,7 +229,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Fu-aZ-ZXJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1145" y="1246"/>
+            <point key="canvasLocation" x="1557" y="1202"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="2lP-B3-oud">
@@ -275,12 +301,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yr9-jI-LyH" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="464" y="150"/>
+            <point key="canvasLocation" x="636" y="144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ndS-of-Hp2">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rVq-Lf-xaS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="ZfU-iW-5h1" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="FB9-iw-kDy">
@@ -292,8 +317,9 @@
                         <segue destination="RmX-dZ-IR8" kind="relationship" relationship="rootViewController" id="qtj-Tb-9pB"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rVq-Lf-xaS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-30" y="144"/>
+            <point key="canvasLocation" x="174" y="144"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
