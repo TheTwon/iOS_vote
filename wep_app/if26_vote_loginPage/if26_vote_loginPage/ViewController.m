@@ -107,17 +107,35 @@
 		//MainViewController *main = [[MainViewController alloc] initWithNibName:nil bundle:nil];
 		//	[self presentViewController:main animated:YES completion:NULL];
 		}
-	else
+	else if([[respDict objectForKey:@"status"]isEqualToString:@"error"])
 		{
-		NSLog(@"failed auth");
-		NSString *msg = @"wrong login/password combination";
+		if([[respDict objectForKey:@"error_type"]isEqualToString:@"user banned"])
+			{
+				NSLog(@"failed auth");
+				NSString *errorMsg = [respDict objectForKey:@"error_type"];
+				NSString *banTime = [respDict objectForKey:@"ban_time"];
+				NSString *msg = [[NSString alloc] initWithFormat:@"%@ banned for %@ seconds", errorMsg, banTime];
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"failed login"
+																message:msg
+															   delegate:nil
+													  cancelButtonTitle:@"OK"
+													  otherButtonTitles:nil];
+				[alert show];
+			
+			}
+		else
+			{
+			NSLog(@"failed auth");
+			NSString *msg = @"bad login/password combination";
 		
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"failed login"
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"failed login"
 														message:msg
 													   delegate:nil
 											  cancelButtonTitle:@"OK"
 											  otherButtonTitles:nil];
-		[alert show];
+			[alert show];
+			}
 		}
 	
 }

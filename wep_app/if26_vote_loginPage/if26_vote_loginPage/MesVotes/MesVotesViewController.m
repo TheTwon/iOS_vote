@@ -225,5 +225,11 @@
 }
 
 
+//reload view at each apperance {ugly}
+- (void) viewWillAppear:(BOOL)animated{
+	User *suser = [User userSingleton];
+	[self httpGetAnsweredVotes:suser.login withToken:suser.token];
+}
+
 
 @end

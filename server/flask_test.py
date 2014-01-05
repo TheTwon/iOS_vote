@@ -7,6 +7,7 @@ from flask import render_template
 from flask.ext.mail import Mail
 from flask.ext.mail import Message
 from flask import Response
+import route_methods
 
 
 app = Flask(__name__)
@@ -18,33 +19,30 @@ def hello():
     return jsonify(status="ok", info="root page")
 
 
+#trully restful
+@app.route("/users/<login>",methods=['GET', 'PUT', 'DELETE', 'POST'])
+def user(login):
+
+	if request.method == "GET":
+		return route_methods.login(login, request.args.get("pwd"))
+
+	if request.method == "PUT":
+		return route_methods.new_user(login, request.json)
+
+	if request.method == "DELETE":
+		return jsonify(status="not yet implemented", info="user deletion not yet implmented")
+
+	if request.method == "POST":
+		return jsonify(status="not yet implemented", info="user modification not yet implmented")
+
+
+
 
 @app.route('/login', methods=['GET'])
 def login():
-	
-	login = request.args.get('login')
-	pwd = request.args.get("pwd")
-	
-	if(login is None) or (pwd is None):
-		return jsonify(status="error", error_type="bad parameter")
-		
-	reqUser = User(login)
-	if(not reqUser.userExists(login)):
-		return jsonify(status="error", error_type="no such user")
-	
+	return route_methods.login(request.args.get("login"), request.args.get("pwd"))
 
-	if(reqUser.isUserBanned()):
-		return jsonify(status="error", error_type="user banned")
-
-	if(not reqUser.loginUser(pwd)):
-		if(reqUser.shouldBeBanned()):
-			reqUser.banUser()
-			return jsonify(status="error", error_type="user banned")
-
-		return jsonify(status="error", error_type="bad password")
 	
-	#user is logged in at this point	
-	return jsonify(status="ok", info="user logged in", token = reqUser.updateToken())
 
 @app.route("/post_test", methods=['POST'])
 def post_test():

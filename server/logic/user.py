@@ -11,6 +11,7 @@ class User:
 	"""
 
 	AUTH_AT = 10
+	MINS_BAN = 1
 
 	def __init__(self, login="", pwd=""):
 		self.login = login
@@ -130,14 +131,12 @@ class User:
 	def shouldBeBanned(self):
 		if self.userExists(self.login):
 			attempts = self.dbUser.getAttempts(self.login)["attempts"]
-			print("attempts-" + str(attempts))
-			print("auth_at-" + str(User.AUTH_AT))
 			if attempts > User.AUTH_AT:
 				return True
 		return False
 
 	def shouldBeUnBanned(self):
-		minsForBan = 2
+		User.MINS_BAN = 2
 		tenMin =  minsForBan * 60 * 1000
 		banTime = self.dbUser.getBanDate(self.login)
 
@@ -152,13 +151,8 @@ class User:
 			return False
 
 		banTime = self.dbUser.getBanDate(self.login)["ban_date"]
-		print("ban time")
-		print(banTime)
-		minsForBan = 1
-		tenMin =  minsForBan * 60
+		tenMin =  User.MINS_BAN * 60
 		currTime = int(time.time())
-		print("time since ban")
-		print(currTime  - banTime)
 		if (currTime - banTime) >= tenMin:
 			return False
 
@@ -166,6 +160,13 @@ class User:
 
 	def getBanDate(self):
 		return self.dbUser.getBanDate(self.login)["ban_date"]
+
+
+	def getBanTime(self):
+		t0 = self.dbUser.getBanDate(self.login)["ban_date"]
+		tn = time.time()
+		secsBan = User.MINS_BAN * 60
+		return (int)(secsBan - (tn - t0))
 
 	def unBanUser(self):
 		self.dbUser.updateBanDate(self.login, None)
