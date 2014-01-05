@@ -31,8 +31,16 @@ def login():
 	reqUser = User(login)
 	if(not reqUser.userExists(login)):
 		return jsonify(status="error", error_type="no such user")
-		
+	
+
+	if(reqUser.isUserBanned()):
+		return jsonify(status="error", error_type="user banned")
+
 	if(not reqUser.loginUser(pwd)):
+		if(reqUser.shouldBeBanned()):
+			reqUser.banUser()
+			return jsonify(status="error", error_type="user banned")
+
 		return jsonify(status="error", error_type="bad password")
 	
 	#user is logged in at this point	

@@ -46,6 +46,8 @@ class User:
 
 		if givenPwd != "":
 			if self.hashSaltPwd(givenPwd, self.salt) == self.pwd:
+				self.clearFailedAttempts(self.login)
+				self.unBanUser()
 				return True
 			
 			self.addFailedAttempt(self.login)
@@ -125,11 +127,48 @@ class User:
 
 
 
-	def banned(self):
+	def shouldBeBanned(self):
 		if self.userExists(self.login):
-			attemps = self.dbUser.getAttemps(self.login)["attempts"]
-			return attempts < User.AUTH_AT
+			attempts = self.dbUser.getAttempts(self.login)["attempts"]
+			print("attempts-" + str(attempts))
+			print("auth_at-" + str(User.AUTH_AT))
+			if attempts > User.AUTH_AT:
+				return True
+		return False
 
+	def shouldBeUnBanned(self):
+		minsForBan = 2
+		tenMin =  minsForBan * 60 * 1000
+		banTime = self.dbUser.getBanDate(self.login)
+
+		if banTime > tenMin:
+			self.unBanUser()
+
+	def banUser(self):
+		self.dbUser.updateBanDate(self.login, int(time.time()))
+
+	def isUserBanned(self):
+		if self.dbUser.getBanDate(self.login)["ban_date"] is None:
+			return False
+
+		banTime = self.dbUser.getBanDate(self.login)["ban_date"]
+		print("ban time")
+		print(banTime)
+		minsForBan = 1
+		tenMin =  minsForBan * 60
+		currTime = int(time.time())
+		print("time since ban")
+		print(currTime  - banTime)
+		if (currTime - banTime) >= tenMin:
+			return False
+
+		return True
+
+	def getBanDate(self):
+		return self.dbUser.getBanDate(self.login)["ban_date"]
+
+	def unBanUser(self):
+		self.dbUser.updateBanDate(self.login, None)
 
 	def getUserId(self):
 		return self.dbUser.getId(self.login)["id"]

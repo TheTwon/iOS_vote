@@ -45,6 +45,22 @@ class DbUser:
 		except MySQLdb.Error:
 			print("error changing token")
 
+
+	def updateBanDate(self, login, banDate=0):
+
+		#if banDate is None:
+		#	banDate = "NULL"
+		try:
+			print("ban date-" + str(banDate))
+			self.cur.execute('UPDATE user SET ban_date = %s WHERE login = %s;', (banDate ,login))
+			self.db.commit()
+		except MySQLdb.Error:
+			print("error updating ban")
+
+	def getBanDate(self, login):
+		self.cur.execute("SELECT ban_date FROM user WHERE login = %s", (login))
+		return self.cur.fetchall()[0]
+
 	def updateFailedAttempts(self, nbAttempts, login):
 		self.cur.execute("UPDATE user SET attempts = %s WHERE login = %s;", (nbAttempts, login))
 		self.db.commit()
