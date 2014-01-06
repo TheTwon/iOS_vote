@@ -25,6 +25,11 @@ class DbResponse:
 		return self.cur.fetchall()[0]["count(1)"] == 1
 
 
+	def responseForPoll(self, pollId):
+		self.cur.execute("SELECT * FROM response WHERE fk_poll = %s ", (pollId))
+		return self.cur.fetchall()
+
+
 	def putResponse(self, pollId, userId, answerId):
 		#token = 123
 		self.cur.execute("""INSERT INTO response (fk_poll, fk_user, fk_answer) VALUES ( %s, %s, %s) """, (pollId, userId, answerId))

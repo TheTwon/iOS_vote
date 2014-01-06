@@ -68,6 +68,18 @@ class Poll:
 				self.dbResponse.putResponse(self.pid, userId, answerId)
 
 
+	def getResults(self):
+		answers = list(self.pollAnswers())
+		responses = list(self.dbResponse.responseForPoll(self.pid))
+
+		for a in answers:
+			a["num_resp"] = 0
+			for r in responses:
+				if r["fk_answer"] == a["id"]:
+					a["num_resp"] = a["num_resp"] + 1
+
+
+		return answers
 
 	@classmethod
 	def getPollList(self):

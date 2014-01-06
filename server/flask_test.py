@@ -53,24 +53,6 @@ def post_test():
 
 @app.route("/new_user", methods=['POST'])
 def new_user():
-	"""	
-	login = request.args.get('login')
-	pwd = request.args.get("pwd")
-	
-	if(login is None) or (pwd is None):
-		return jsonify(status="error", error_type="bad parameter")
-	
-	if login == "" or pwd == "":
-		return jsonify(status="error", error_type="empty parameters")
-	
-	reqUser = User(login)
-	if(reqUser.userExists(login)):
-		return jsonify(status="error", error_type="user exists")
-	
-	print("adding user")
-	reqUser.createUser(login, pwd)
-	return jsonify(status="ok", info="user created")
-	"""
 
 	content = request.json
 	params = ["login", "pwd"]
@@ -202,6 +184,31 @@ def poll():
 	p = reqUser.getUserPoll(pollId)
 
 	return jsonify(p)
+
+
+@app.route('/<login>/polls/<int:poll_id>/results' )
+def pollAnswers(login, poll_id, methods=['GET']):
+	# similar to /poll route
+
+	utoken = request.args.get("token")
+	if utoken is None:
+		return jsonify(status="error", error_type="bad parameter")
+
+	if utoken == "":
+		return jsonify(status="error", error_type="empty parameters")
+	
+	reqUser = User(login)
+	if(not reqUser.userExists(login)):
+		return jsonify(status="error", error_type="no such user")
+	
+	if(not reqUser.loginUser(token=utoken)):
+		return jsonify(status="error", error_type="bad token")
+
+	p = reqUser.getUserPollAnswers(poll_id)
+	pi = reqUser.getUserPoll(poll_id)
+
+	pi["results"] = p
+	return jsonify(pi)
 
 
 

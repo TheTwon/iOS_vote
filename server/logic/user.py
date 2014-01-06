@@ -183,6 +183,12 @@ class User:
 
 		return p
 
+	def getUserPollAnswers(self, pollId):
+		p = Poll(pollId)
+		return p.getResults()
+
+		
+
 
 	def hasAnsweredPoll(self, pollId):
 		p = Poll(pollId)
