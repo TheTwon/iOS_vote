@@ -42,8 +42,8 @@
 {
 	tmpLogin = userLogin;
 	
-	NSString *strUri = [NSString stringWithFormat:@"https://127.0.0.1:8000/login?login=%@&pwd=%@",userLogin, userPwd];
-	
+	//NSString *strUri = [NSString stringWithFormat:@"https://127.0.0.1:8000/login?login=%@&pwd=%@",userLogin, userPwd];
+	NSString *strUri = [NSString stringWithFormat:@"https://127.0.0.1:8000/users/%@?pwd=%@",userLogin, userPwd];
 
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:strUri]];
 	

@@ -24,6 +24,7 @@
 		654D84B51863279B00350663 /* MesVotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D84B41863279B00350663 /* MesVotesViewController.m */; };
 		654D84B8186328CA00350663 /* ReglagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D84B7186328CA00350663 /* ReglagesViewController.m */; };
 		654D84BE186329C500350663 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D84BD186329C500350663 /* Vote.m */; };
+		6C3F16D8187B64630023BB3F /* PollResponseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3F16D7187B64630023BB3F /* PollResponseViewController.m */; };
 		6C53D8121875B523002873A5 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C53D8111875B523002873A5 /* MainViewController.m */; };
 		6C53D818187605F7002873A5 /* RestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C53D817187605F7002873A5 /* RestClient.m */; };
 		6C90363318771A3400999F7B /* PollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C90363218771A3400999F7B /* PollViewController.m */; };
@@ -71,6 +72,8 @@
 		654D84B7186328CA00350663 /* ReglagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReglagesViewController.m; sourceTree = "<group>"; };
 		654D84BC186329C500350663 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
 		654D84BD186329C500350663 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vote.m; sourceTree = "<group>"; };
+		6C3F16D6187B64630023BB3F /* PollResponseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollResponseViewController.h; sourceTree = "<group>"; };
+		6C3F16D7187B64630023BB3F /* PollResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollResponseViewController.m; sourceTree = "<group>"; };
 		6C53D8101875B523002873A5 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		6C53D8111875B523002873A5 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		6C53D816187605F7002873A5 /* RestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestClient.h; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				6C97429B1878851500637386 /* PostPoll.m */,
 				6C97429918785A5F00637386 /* new Account */,
 				6C90363718772BB300999F7B /* Main.storyboard */,
+				6C3F16D6187B64630023BB3F /* PollResponseViewController.h */,
+				6C3F16D7187B64630023BB3F /* PollResponseViewController.m */,
 				6C903634187722AE00999F7B /* Answer.h */,
 				6C903635187722AE00999F7B /* Answer.m */,
 				6CDEBD2B18756F9E005FA506 /* User.h */,
@@ -350,6 +355,7 @@
 				6C903636187722AE00999F7B /* Answer.m in Sources */,
 				6C97429818785A5300637386 /* NewAccountViewController.m in Sources */,
 				6C97429C1878851500637386 /* PostPoll.m in Sources */,
+				6C3F16D8187B64630023BB3F /* PollResponseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

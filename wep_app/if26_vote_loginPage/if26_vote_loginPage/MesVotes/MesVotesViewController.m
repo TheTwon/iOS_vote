@@ -9,6 +9,7 @@
 #import "MesVotesViewController.h"
 #import "Vote.h"
 #import "User.h"
+#import "PollResponseViewController.h"
 
 @interface MesVotesViewController ()
 
@@ -152,6 +153,16 @@
 				  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
 	// Return nil to indicate not necessary to store a cached response for this connection
 	return nil;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	NSLog(@"prepare for segue");
+    if ([segue.identifier isEqualToString:@"pollResponseSegue"]) {
+		NSLog(@"if pollResponseSegue");
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        PollResponseViewController *destViewController = segue.destinationViewController;
+        destViewController.v = [votes objectAtIndex:indexPath.row];
+    }
 }
 
 

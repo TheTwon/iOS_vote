@@ -97,11 +97,11 @@
 - (void) httpPostNewUser: (NSString *) userLogin withPwd: (NSString *) userPwd;
 {
 	
-	NSString *strUri = [NSString stringWithFormat:@"https://127.0.0.1:8000/new_user"];
+	NSString *strUri = [NSString stringWithFormat:@"https://127.0.0.1:8000/users/%@", userLogin];
 	
 	NSMutableDictionary *reqDict = [[NSMutableDictionary alloc] init];
 	//2
-	[reqDict setValue:userLogin forKey:@"login"];
+	//[reqDict setValue:userLogin forKey:@"login"];
 	[reqDict setValue:userPwd forKey:@"pwd"];
 
 	
@@ -114,7 +114,7 @@
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:strUri]];
 	
 	[request setValue:@"application/json" forHTTPHeaderField:@"content-type"];
-	[request setHTTPMethod:@"POST"];
+	[request setHTTPMethod:@"PUT"];
     [request setHTTPBody:[NSData dataWithData:jsonData]];
 	// Create url connection and fire request
 	NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
