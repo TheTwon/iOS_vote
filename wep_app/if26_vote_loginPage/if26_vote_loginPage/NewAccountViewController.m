@@ -2,7 +2,7 @@
 //  NewAccountViewController.m
 //  if26_vote_loginPage
 //
-//  Created by jean on 04/01/14.
+//  Created by ERHART Antoine on 04/01/14.
 //  Copyright (c) 2014 utt. All rights reserved.
 //
 

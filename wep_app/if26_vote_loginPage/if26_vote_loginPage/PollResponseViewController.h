@@ -9,7 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Vote.h"
 
-@interface PollResponseViewController : UIViewController
+@interface PollResponseViewController : UIViewController<NSURLConnectionDelegate>
+{
+    NSMutableData *_responseData;
+}
+
 @property (weak, nonatomic) Vote *v;
+
+@property (weak, nonatomic) IBOutlet UITextView *txtVoteResp;
 
 @end

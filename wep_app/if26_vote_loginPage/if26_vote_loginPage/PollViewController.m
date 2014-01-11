@@ -45,7 +45,7 @@
 
 -(void) addChoicePicker
 {
-	myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 145, 320, 150)];
+	myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 160, 320, 200)];
 	myPickerView.delegate = self;
 	myPickerView.showsSelectionIndicator = YES;
 	[self.view addSubview:myPickerView];
@@ -84,15 +84,15 @@
 		{
 			title = [@"" stringByAppendingFormat:@"%d",row];
 		}
-	else {
-			//NSLog(@"FULL:: %@", answers);
+	else
+		{
 			Answer *a = [answers objectAtIndex:row];
 			title = a.description;
-	}
-    
+		}
 	
     return title;
 }
+
 
 // tell the picker the width of each row for a given component
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
@@ -131,8 +131,7 @@
 {
 	
 	NSString *strUri = [NSString stringWithFormat:@"https://127.0.0.1:8000/poll?login=%@&token=%@&poll_id=%@",userLogin, userToken, pollId];
-	
-	
+		
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:strUri]];
 	
 	// Create url connection and fire request
@@ -144,15 +143,13 @@
 
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-	// The request is complete and data has been received
-	// You can parse the stuff in your instance variable now
-	
 	
 	NSError *e;
 	NSDictionary *respDict = [NSJSONSerialization JSONObjectWithData:_responseData options:kNilOptions error:&e];
 	
 	NSArray *ans = [respDict objectForKey:@"answers"];
 
+	//answers dict
 	awesomeAnswers = ans;
 	NSString *status = [respDict objectForKey:@"status"];
 	NSString *title = [respDict objectForKey:@"title"];
@@ -163,6 +160,7 @@
 	
 	NSMutableArray *tmpAnswers = [NSMutableArray arrayWithCapacity:20];
 	
+	//get answers from poll
 	superAnswers = [NSMutableArray arrayWithCapacity:ans.count];
 	for (NSDictionary *ia in ans){
 		
@@ -175,13 +173,11 @@
 		[tmpAnswers addObject:a];
 		[superAnswers addObject:a];
 	}
-	
-	
 	answers =  [tmpAnswers copy];
-
 	[self addChoicePicker];
-	
 }
+
+
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
 	NSLog(@"an error has occured");
@@ -201,6 +197,7 @@
 	return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
 }
 
+
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
 	
 	[challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
@@ -211,17 +208,8 @@
 
 
 - (IBAction)btnPressed:(id)sender {
+	//prepare to send response
 	
-	/*
-	PostPoll *pollPoster = [PostPoll alloc];
-	NSString *pid =  [_v.pollId stringValue];
-	Answer *a = [answers objectAtIndex:(int)selectedRow];
-	NSNumber *dbgNum = a.answerId;
-	NSString *aid = [a.answerId stringValue];
-	
-	User *suser = [User userSingleton];
-	//[pollPoster httpPostVote:suser.login withToken:suser.token withPollId:pid withAnswerId:aid];
-	 */
 	if(selectedRow == NULL)
 		{
 			selectedRow = [[NSNumber alloc] initWithInt:0];
@@ -233,6 +221,8 @@
 	User *suser = [User userSingleton];
 	NSString *pid =  [_v.pollId stringValue];
 	[pollPoster setCallingController:self];
+	
+	//call to ws
 	[pollPoster httpPostVote:suser.login withToken:suser.token withPollId:pid withAnswerId:a.answerId.stringValue];
 }
 @end

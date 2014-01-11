@@ -21,8 +21,8 @@
 
 - (void)loadInitialData {
 	
+	//user singleton
 	User *suser = [User userSingleton];
-	
 	[self httpGetOngoingVotes:suser.login withToken:suser.token];
 	
 }
@@ -168,9 +168,7 @@
 	
 	NSString *strUri = [NSString stringWithFormat:@"https://127.0.0.1:8000/unanswered_polls?login=%@&token=%@",userLogin, userToken];
 	
-	
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:strUri]];
-	
 	// Create url connection and fire request
 	NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 	
@@ -178,14 +176,12 @@
 
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-	// The request is complete and data has been received
-	// You can parse the stuff in your instance variable now
+	// parsing data
 	
 	NSError *e;
 	NSDictionary *respDict = [NSJSONSerialization JSONObjectWithData:_responseData options:kNilOptions error:&e];
 	
 	NSArray *userVotes = [respDict objectForKey:@"votes"];
-	
 	NSString *status = [respDict objectForKey:@"status"];
 	
 	NSMutableArray *tmpvotes = [NSMutableArray arrayWithCapacity:20];
@@ -198,12 +194,10 @@
 		vote.candidat2 = -1;
 		vote.pollId = [ia objectForKey:@"id"];
 		[tmpvotes addObject:vote];
-		
 	}
-	self.votes = tmpvotes;
-	[self.tableView reloadData];
-
 	
+	self.votes = tmpvotes;
+	[self.tableView reloadData];	
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {

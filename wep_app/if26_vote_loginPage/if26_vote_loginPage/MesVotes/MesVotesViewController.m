@@ -199,7 +199,7 @@
 		vote.description = [ia objectForKey:@"description"];
 		vote.candidat1 = -1;
 		vote.candidat2 = -1;
-		//vote.pollId = [ia objectForKey:@"id"];
+		vote.pollId = [ia objectForKey:@"id"];
 		[tmpvotes addObject:vote];
 		
 	}

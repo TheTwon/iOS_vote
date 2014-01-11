@@ -56,8 +56,8 @@
 		55417F38186057F7000CBF09 /* if26_vote_loginPage-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "if26_vote_loginPage-Prefix.pch"; sourceTree = "<group>"; };
 		55417F39186057F7000CBF09 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		55417F3A186057F7000CBF09 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		55417F3F186057F7000CBF09 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		55417F40186057F7000CBF09 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		55417F3F186057F7000CBF09 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = if26_vote_loginPage/ViewController.h; sourceTree = "<group>"; };
+		55417F40186057F7000CBF09 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = if26_vote_loginPage/ViewController.m; sourceTree = "<group>"; };
 		55417F42186057F7000CBF09 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		55417F48186057F7000CBF09 /* if26_vote_loginPageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = if26_vote_loginPageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		55417F49186057F7000CBF09 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -70,25 +70,25 @@
 		654D84B41863279B00350663 /* MesVotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MesVotesViewController.m; path = MesVotes/MesVotesViewController.m; sourceTree = "<group>"; };
 		654D84B6186328CA00350663 /* ReglagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReglagesViewController.h; sourceTree = "<group>"; };
 		654D84B7186328CA00350663 /* ReglagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReglagesViewController.m; sourceTree = "<group>"; };
-		654D84BC186329C500350663 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
-		654D84BD186329C500350663 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vote.m; sourceTree = "<group>"; };
-		6C3F16D6187B64630023BB3F /* PollResponseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollResponseViewController.h; sourceTree = "<group>"; };
-		6C3F16D7187B64630023BB3F /* PollResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollResponseViewController.m; sourceTree = "<group>"; };
-		6C53D8101875B523002873A5 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		6C53D8111875B523002873A5 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		654D84BC186329C500350663 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vote.h; path = if26_vote_loginPage/Vote.h; sourceTree = "<group>"; };
+		654D84BD186329C500350663 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Vote.m; path = if26_vote_loginPage/Vote.m; sourceTree = "<group>"; };
+		6C3F16D6187B64630023BB3F /* PollResponseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PollResponseViewController.h; path = if26_vote_loginPage/PollResponseViewController.h; sourceTree = "<group>"; };
+		6C3F16D7187B64630023BB3F /* PollResponseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PollResponseViewController.m; path = if26_vote_loginPage/PollResponseViewController.m; sourceTree = "<group>"; };
+		6C53D8101875B523002873A5 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = if26_vote_loginPage/MainViewController.h; sourceTree = "<group>"; };
+		6C53D8111875B523002873A5 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = if26_vote_loginPage/MainViewController.m; sourceTree = "<group>"; };
 		6C53D816187605F7002873A5 /* RestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestClient.h; sourceTree = "<group>"; };
 		6C53D817187605F7002873A5 /* RestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestClient.m; sourceTree = "<group>"; };
-		6C90363118771A3400999F7B /* PollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PollViewController.h; sourceTree = "<group>"; };
-		6C90363218771A3400999F7B /* PollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PollViewController.m; sourceTree = "<group>"; };
-		6C903634187722AE00999F7B /* Answer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Answer.h; sourceTree = "<group>"; };
-		6C903635187722AE00999F7B /* Answer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Answer.m; sourceTree = "<group>"; };
+		6C90363118771A3400999F7B /* PollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PollViewController.h; path = if26_vote_loginPage/PollViewController.h; sourceTree = "<group>"; };
+		6C90363218771A3400999F7B /* PollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PollViewController.m; path = if26_vote_loginPage/PollViewController.m; sourceTree = "<group>"; };
+		6C903634187722AE00999F7B /* Answer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Answer.h; path = if26_vote_loginPage/Answer.h; sourceTree = "<group>"; };
+		6C903635187722AE00999F7B /* Answer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Answer.m; path = if26_vote_loginPage/Answer.m; sourceTree = "<group>"; };
 		6C90363818772BB300999F7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = if26_vote_loginPage/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6C97429618785A5300637386 /* NewAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAccountViewController.h; sourceTree = "<group>"; };
 		6C97429718785A5300637386 /* NewAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewAccountViewController.m; sourceTree = "<group>"; };
-		6C97429A1878851500637386 /* PostPoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostPoll.h; sourceTree = "<group>"; };
-		6C97429B1878851500637386 /* PostPoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostPoll.m; sourceTree = "<group>"; };
-		6CDEBD2B18756F9E005FA506 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		6CDEBD2C18756F9E005FA506 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		6C97429A1878851500637386 /* PostPoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostPoll.h; path = if26_vote_loginPage/PostPoll.h; sourceTree = "<group>"; };
+		6C97429B1878851500637386 /* PostPoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostPoll.m; path = if26_vote_loginPage/PostPoll.m; sourceTree = "<group>"; };
+		6CDEBD2B18756F9E005FA506 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = if26_vote_loginPage/User.h; sourceTree = "<group>"; };
+		6CDEBD2C18756F9E005FA506 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = if26_vote_loginPage/User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,29 +148,11 @@
 		55417F30186057F7000CBF09 /* if26_vote_loginPage */ = {
 			isa = PBXGroup;
 			children = (
-				6C97429A1878851500637386 /* PostPoll.h */,
-				6C97429B1878851500637386 /* PostPoll.m */,
-				6C97429918785A5F00637386 /* new Account */,
+				6C3C11CA18804EC400C3440A /* models */,
+				6C3C11CD18805B7400C3440A /* controles */,
 				6C90363718772BB300999F7B /* Main.storyboard */,
-				6C3F16D6187B64630023BB3F /* PollResponseViewController.h */,
-				6C3F16D7187B64630023BB3F /* PollResponseViewController.m */,
-				6C903634187722AE00999F7B /* Answer.h */,
-				6C903635187722AE00999F7B /* Answer.m */,
-				6CDEBD2B18756F9E005FA506 /* User.h */,
-				6CDEBD2C18756F9E005FA506 /* User.m */,
 				55417F39186057F7000CBF09 /* AppDelegate.h */,
 				55417F3A186057F7000CBF09 /* AppDelegate.m */,
-				6C53D8101875B523002873A5 /* MainViewController.h */,
-				6C53D8111875B523002873A5 /* MainViewController.m */,
-				6C90363118771A3400999F7B /* PollViewController.h */,
-				6C90363218771A3400999F7B /* PollViewController.m */,
-				654D84BC186329C500350663 /* Vote.h */,
-				654D84BD186329C500350663 /* Vote.m */,
-				654D84B9186328FF00350663 /* Reglages */,
-				654D84BA1863290D00350663 /* Votes En Cours */,
-				654D84BB1863291800350663 /* Mes Votes */,
-				55417F3F186057F7000CBF09 /* ViewController.h */,
-				55417F40186057F7000CBF09 /* ViewController.m */,
 				6C53D816187605F7002873A5 /* RestClient.h */,
 				6C53D817187605F7002873A5 /* RestClient.m */,
 				55417F42186057F7000CBF09 /* Images.xcassets */,
@@ -215,6 +197,7 @@
 				654D84B7186328CA00350663 /* ReglagesViewController.m */,
 			);
 			name = Reglages;
+			path = if26_vote_loginPage;
 			sourceTree = "<group>";
 		};
 		654D84BA1863290D00350663 /* Votes En Cours */ = {
@@ -224,6 +207,7 @@
 				654D84B11863256E00350663 /* VotesEnCoursViewController.m */,
 			);
 			name = "Votes En Cours";
+			path = if26_vote_loginPage;
 			sourceTree = "<group>";
 		};
 		654D84BB1863291800350663 /* Mes Votes */ = {
@@ -233,6 +217,67 @@
 				654D84B41863279B00350663 /* MesVotesViewController.m */,
 			);
 			name = "Mes Votes";
+			path = if26_vote_loginPage;
+			sourceTree = "<group>";
+		};
+		6C3C11C918804E8400C3440A /* response */ = {
+			isa = PBXGroup;
+			children = (
+				6C3F16D6187B64630023BB3F /* PollResponseViewController.h */,
+				6C3F16D7187B64630023BB3F /* PollResponseViewController.m */,
+			);
+			name = response;
+			sourceTree = "<group>";
+		};
+		6C3C11CA18804EC400C3440A /* models */ = {
+			isa = PBXGroup;
+			children = (
+				654D84BC186329C500350663 /* Vote.h */,
+				654D84BD186329C500350663 /* Vote.m */,
+				6C903634187722AE00999F7B /* Answer.h */,
+				6C903635187722AE00999F7B /* Answer.m */,
+				6CDEBD2B18756F9E005FA506 /* User.h */,
+				6CDEBD2C18756F9E005FA506 /* User.m */,
+			);
+			name = models;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		6C3C11CB18804EF200C3440A /* web client */ = {
+			isa = PBXGroup;
+			children = (
+				6C97429A1878851500637386 /* PostPoll.h */,
+				6C97429B1878851500637386 /* PostPoll.m */,
+			);
+			name = "web client";
+			sourceTree = "<group>";
+		};
+		6C3C11CC18804F1D00C3440A /* main view */ = {
+			isa = PBXGroup;
+			children = (
+				6C53D8101875B523002873A5 /* MainViewController.h */,
+				6C53D8111875B523002873A5 /* MainViewController.m */,
+			);
+			name = "main view";
+			sourceTree = "<group>";
+		};
+		6C3C11CD18805B7400C3440A /* controles */ = {
+			isa = PBXGroup;
+			children = (
+				6C90363118771A3400999F7B /* PollViewController.h */,
+				6C90363218771A3400999F7B /* PollViewController.m */,
+				55417F3F186057F7000CBF09 /* ViewController.h */,
+				55417F40186057F7000CBF09 /* ViewController.m */,
+				654D84B9186328FF00350663 /* Reglages */,
+				654D84BA1863290D00350663 /* Votes En Cours */,
+				654D84BB1863291800350663 /* Mes Votes */,
+				6C3C11CC18804F1D00C3440A /* main view */,
+				6C3C11CB18804EF200C3440A /* web client */,
+				6C97429918785A5F00637386 /* new Account */,
+				6C3C11C918804E8400C3440A /* response */,
+			);
+			name = controles;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		6C97429918785A5F00637386 /* new Account */ = {
@@ -242,6 +287,7 @@
 				6C97429718785A5300637386 /* NewAccountViewController.m */,
 			);
 			name = "new Account";
+			path = if26_vote_loginPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

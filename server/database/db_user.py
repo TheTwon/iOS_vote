@@ -1,5 +1,5 @@
 import db_tools
-import MySQLdb
+
 
 class DbUser:
 	 
@@ -42,8 +42,8 @@ class DbUser:
 		try:
 			self.cur.execute('UPDATE user SET token = %s, token_validity = %s WHERE login = %s;', (token, validity ,login))
 			self.db.commit()
-		except MySQLdb.Error:
-			print("error changing token")
+		except:
+			self.db.rollback()
 
 
 	def updateBanDate(self, login, banDate=0):
@@ -54,8 +54,8 @@ class DbUser:
 			print("ban date-" + str(banDate))
 			self.cur.execute('UPDATE user SET ban_date = %s WHERE login = %s;', (banDate ,login))
 			self.db.commit()
-		except MySQLdb.Error:
-			print("error updating ban")
+		except:
+			self.db.rollback()
 
 	def getBanDate(self, login):
 		self.cur.execute("SELECT ban_date FROM user WHERE login = %s", (login))

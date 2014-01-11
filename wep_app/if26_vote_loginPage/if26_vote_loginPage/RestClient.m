@@ -25,11 +25,8 @@
 	NSString *strUri = [NSString stringWithFormat:@"http://127.0.0.1:8000/login?login=%@&pwd=%@",login, pwd];
 	
 	NSLog(@"string url: %@", strUri);
-	
 	NSURL *nsUri = [NSURL URLWithString:strUri];
-	
 	NSLog(@"nsurl: %@", nsUri);
-	
 	NSURLRequest *req = [NSURLRequest requestWithURL:nsUri
                                          cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                      timeoutInterval:60.0];

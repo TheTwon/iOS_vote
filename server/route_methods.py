@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request
-import MySQLdb
 import json
 from logic.user import User
 from logic.poll import Poll

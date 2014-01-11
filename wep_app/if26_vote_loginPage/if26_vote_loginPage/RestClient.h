@@ -15,8 +15,6 @@
 }
 
 
-
-
 - (NSString*)buildUrl: (NSString*)object args:(NSString*)args;
 - (id)get:(NSString*)object args:(NSDictionary*)args;
 - (id)post:(NSString *)object args:(NSDictionary *)args;

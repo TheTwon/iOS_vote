@@ -1,5 +1,3 @@
-import MySQLdb
-import MySQLdb.cursors
 import pymysql
 
 

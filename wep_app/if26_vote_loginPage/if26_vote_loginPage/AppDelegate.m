@@ -16,28 +16,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    /*votes = [NSMutableArray arrayWithCapacity:20];
-	Vote *vote = [[Vote alloc] init];
-	vote.nom = @"Présidence BDE";
-    vote.description = @"Votez pour le nouveau président";
-    vote.candidat1 = 52;
-    vote.candidat2 = 23;
-    [votes addObject:vote];
-    
-    vote = [[Vote alloc] init];
-    vote.nom = @"Couleur officiel UTT";
-    vote.description = @"Votez pour la couleur de l'UTT";
-    vote.candidat1 = 31;
-    vote.candidat2 = 43;
-    [votes addObject:vote];
-    
-    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-	UINavigationController *navigationController =
-    [[tabBarController viewControllers] objectAtIndex:0];
-	
-	VotesEnCoursViewController *votesViewController =
-    [[navigationController viewControllers] objectAtIndex:0];*/
-	//votesViewController.votes = votes;
 
     return YES;
 }
